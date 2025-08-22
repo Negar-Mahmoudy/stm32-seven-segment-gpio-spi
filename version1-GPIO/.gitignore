@@ -1,0 +1,37 @@
+
+# Build folders
+/Debug/
+/Release/
+/build/
+/out/
+
+# Object files, binaries, maps
+*.o
+*.d
+*.map
+*.elf
+*.bin
+*.hex
+*.list
+*.lst
+
+# IDE specific
+*.launch
+*.uvguix.*
+*.uvoptx
+*.uvprojx
+*.ewd
+*.ewp
+*.ewt
+*.dep
+.settings/
+*.suo
+*.user
+*.log
+
+# Backup files
+*~
+*.bak
+
+# Generated files from CubeMX backups
+*.ioc-backup
