@@ -63,7 +63,7 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 ![Seven-Segment Demo GIF](https://github.com/Negar-Mahmoudy/stm32-seven-segment-gpio-spi/blob/1ff42e5bc74828881815b0a4b17252e1bb3f4b75/images/version1-ezgif.com-optimize.gif)  
 *Incrementing and decrementing numbers with push buttons - Version1*
 
-![Seven-Segment Demo GIF](images/version2.gif)  
+![Seven-Segment Demo GIF](https://github.com/Negar-Mahmoudy/stm32-seven-segment-gpio-spi/blob/c906e0cdc1f5d99631c8006942a4aca86215e5ba/images/version2-ezgif.com-optimize.gif)  
 *Incrementing and decrementing numbers with push buttons - Version2*
 
 ---
