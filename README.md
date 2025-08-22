@@ -60,7 +60,7 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 *Seven-segment driven through SPI and 74HC595 shift register.*
 
 ### Working GIF  
-![Seven-Segment Demo GIF](images/version1.gif)  
+![Seven-Segment Demo GIF](https://github.com/Negar-Mahmoudy/stm32-seven-segment-gpio-spi/blob/6cc29f1db992352177ac76d32f580e2fa85845ba/images/version1.mp4)  
 *Incrementing and decrementing numbers with push buttons - Version1*
 
 ![Seven-Segment Demo GIF](images/version2.gif)  
