@@ -60,8 +60,11 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 *Seven-segment driven through SPI and 74HC595 shift register.*
 
 ### Working GIF  
-![Seven-Segment Demo GIF](images/seven_segment_demo.gif)  
-*Incrementing and decrementing numbers with push buttons.*
+![Seven-Segment Demo GIF](images/version1.gif)  
+*Incrementing and decrementing numbers with push buttons - Version1*
+
+![Seven-Segment Demo GIF](images/version2.gif)  
+*Incrementing and decrementing numbers with push buttons - Version2*
 
 ---
 
