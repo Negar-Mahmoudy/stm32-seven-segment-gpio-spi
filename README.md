@@ -52,7 +52,7 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 ## Demo  
 
 ### Version 1 – Direct GPIO  
-![Seven-Segment GPIO](images/version1-schematic.jpg)  
+![Seven-Segment GPIO](https://github.com/Negar-Mahmoudy/stm32-seven-segment-gpio-spi/blob/acf085bbcd67c09e0e98c98953ab953fda11a270/images/version1-schematic.png)  
 *Seven-segment driven directly by STM32F103C8 GPIO pins.*
 
 ### Version 2 – SPI with 74HC595  
