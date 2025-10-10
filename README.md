@@ -1,42 +1,39 @@
 # Seven-Segment Display with STM32F103C8  
-STM32F103C8 project driving a seven-segment display via GPIO and SPI (74HC595)
+in this project I drived a seven-segment display in the first version with GPIO and the second version with SPI connection and a shift register(74HC595)
 
 ## Description  
-This project demonstrates two different approaches to drive a **common-cathode seven-segment display** using the STM32F103C8 microcontroller:  
+This project presents two different ways to drive a **common-cathode seven-segment display** using a STM32F103C8 microcontroller:  
 
-1. **Direct GPIO control** – each segment is driven directly by GPIO pins.  
-2. **SPI with 74HC595 shift register** – reduces the number of pins required by using a shift register.  
+1. **Direct GPIO control**   
+2. **SPI connection and a shift register(74HC595)**  
 
-Two push buttons are used to increment and decrement numbers from **0 to 9** in both implementations.  
-
----
-
-## Hardware Used  
-- STM32F103C8 (Blue Pill)  
-- Common-cathode seven-segment display  
-- 2× Push buttons  
-- Breadboard, jumper wires  
-- 74HC595 shift register (for Version 2)  
+In both versions, two push buttons increment and decrement numbers between **0 and 9**.  
 
 ---
 
-## Software & Tools  
-- STM32CubeIDE and STM32CubeMX  
+## Hardware
+- STM32F103C8
+- 1x common-cathode seven-segment LED
+- 2x Push buttons  
+- Breadboard, wires  
+- 74HC595 shift register (for version2)
 - ST-LINK programmer  
+
+---
+
+## Software
+- STM32CubeIDE
+- STM32CubeMX  
 
 ---
 
 ## Implementation Versions  
 
-### 🔹 Version 1 – Direct GPIO  
-- Segments connected directly to GPIO pins.  
-- A lookup table defines which segments to turn on for digits `0–9`.  
-- Simple to implement but consumes many I/O pins.  
+### Version1 – GPIO  
+In this version, segments are connected directly to GPIO pins and based on a lookup table, segments turn on and off for digits `0–9`. Despite the simplicity of this version, it uses many I/O pins.  
 
-### 🔹 Version 2 – SPI with 74HC595  
-- Segments controlled through the **74HC595 shift register**.  
-- Data is sent via the SPI interface, then latched to update the display.  
-- Saves GPIO pins and is scalable for multi-digit displays.  
+### Version2 – SPI and a shift register(74HC595)  
+In this version, segments are driven by a shift register(74HC595) and data is sent using the SPI. Then microcontroller latches to update the display. In this version less pins are used and is pracrical for multi digit displays.  
 
 ---
 
@@ -68,10 +65,10 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 
 ---
 
-## Step-by-Step Walkthrough — Version 1 (Direct GPIO)
+## Step-by-Step — Version1(Direct GPIO)
 
-1. **Map the segments to GPIO pins**
-   - Connect the 7-segment (common-cathode) segments to `GPIOB`:
+1. **Math the segments with GPIO pins**
+   - Connect the 7-segment LED segments to `GPIOB`:
      ```
      PB11 → a
      PB10 → b
@@ -81,11 +78,11 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
      PB13 → f
      PB12 → g
      ```
-   - Buttons: `BTN_UP`, `BTN_DOWN` on GPIOB with pull-ups, EXTI on falling edge.
+   - `BTN_UP`, `BTN_DOWN` with pull-ups, and EXTI on the falling edge are on GPIOB.
 
 2. **Define digit bitmasks**
-   - Create a lookup table `digits[10]` where each bit indicates one segment (1 = ON, 0 = OFF).
-   - Shift the masks so they align with PB9–PB15.  
+   - Create a lookup table `digits[10]`. Each bit shows a segment (1 = ON, 0 = OFF).
+   - Shift the masks to align them with PB9–PB15.  
      ```c
      const uint16_t digits[10] = {
        0x77<<9, 0x03<<9, 0x6e<<9, 0x4f<<9, 0x1b<<9,
@@ -95,7 +92,7 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
      uint8_t num = 0;            // current digit (0..9)
      ```
 
-3. **Initialize clocks and GPIOs**
+3. **Clocks and GPIOs**
    - Enable clocks for `GPIOB` and configure:
      - Segments (`PB9..PB15`) as **Output Push-Pull** (low speed).
      - Buttons as **Input with Pull-Up**, **EXTI on falling edge**.
@@ -103,7 +100,7 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 
 4. **Configure EXTI and NVIC**
    - Enable EXTI lines for the two buttons.
-   - Set NVIC priorities (e.g., `EXTI0_IRQn`, `EXTI1_IRQn`) and enable them.
+   - Set NVIC interrupts.
 
 5. **Handle button presses in the EXTI callback**
    - Use `HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)`:
@@ -111,8 +108,8 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
      - If `BTN_DOWN` → `num--` (clamp at 0).
    - Update the display:
      ```c
-     HAL_GPIO_WritePin(GPIOB, digits[num], GPIO_PIN_SET);                  // turn ON required segments
-     HAL_GPIO_WritePin(GPIOB, mask & ~(digits[num]), GPIO_PIN_RESET);      // turn OFF others
+     HAL_GPIO_WritePin(GPIOB, digits[num], GPIO_PIN_SET);                 
+     HAL_GPIO_WritePin(GPIOB, mask & ~(digits[num]), GPIO_PIN_RESET);     
      ```
 
 6. **Main loop stays idle**
@@ -127,7 +124,7 @@ Two push buttons are used to increment and decrement numbers from **0 to 9** in 
 
 > ✅ Result: Minimal logic in the main loop, instant updates on button press, but uses many GPIO pins (7 segments + 2 buttons).
 
-## Step-by-Step Walkthrough — Version 2 (SPI + 74HC595)
+## Step-by-Step Walkthrough — Version2(SPI + 74HC595)
 
 1. **Hardware setup**
    - Replace direct GPIO control with a **74HC595 shift register**.
